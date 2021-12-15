@@ -92,30 +92,29 @@ const reverseTransaction = async (req, res) => {
             }
             const findTxn = user.transactionHistory.find(e => e.TxnId == transactionId)
             if(findTxn){
-                function getKeyByValue(object, value) {
-                    console.log(Object.keys(object).find(key => object[key] === value));
+                // function getKeyByValue(object, value) {
+                //     console.log(Object.keys(object).find(key => object[key] === value));
 
-                }
                 
-                const receiverNo = getKeyByValue(findTxn, "ReceiverAcctNo")
-                console.log(receiverNo)
-                return res.send(findTxn)
-                // const receiverNo = findTxn.ReceiverAcctNo
-                // const amount = findTxn.Amount
+                // const receiverNo = getKeyByValue(findTxn, "ReceiverAcctNo")
+                // console.log(receiverNo)
+                // return res.send(findTxn)
+                const receiverNo = findTxn.ReceiverAcctNo
+                const amount = findTxn.Amount
                 // return res.send(receiverNo)
 
-                // const receiver = await User.findOne({ accountNo: receiverNo })
+                const receiver = await User.findOne({ accountNo: receiverNo })
 
-                // if(receiver){
-                //     user.balance += amount
-                //     receiver.balance -= amount
+                if(receiver){
+                    user.balance += amount
+                    receiver.balance -= amount
 
-                //     await user.save()
-                //     await receiver.save()
+                    await user.save()
+                    await receiver.save()
 
-                //     return res.status(201).json({ message: "Transaction reversal was successful" })
-                // }
-                // return res.status(400).json({ message: "Invalid Transaction" })
+                    return res.status(201).json({ message: "Transaction reversal was successful" })
+                }
+                return res.status(400).json({ message: "Invalid Transaction" })
             }
             return res.status(400).json({ message: "Invalid transaction" })
         }

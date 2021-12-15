@@ -9,6 +9,7 @@ class Account {
     this.transactionClass = transactionClass;
     this.printer = printer;
     this.transactionHistory = [];
+    this.isActive = true
   }
 
   deposit(amount){
@@ -32,6 +33,14 @@ class Account {
     this.printer.printStatement(this.transactionHistory, (transaction) => {
       return transaction.display();
     });
+  }
+
+  disable() {
+    if(this.isActive == false){
+      return "Account is already disabled"
+    }
+    this.isActive == true
+    return "Account was successfully disabled"
   }
 
   _addTransaction(argObj) {

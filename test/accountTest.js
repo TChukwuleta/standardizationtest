@@ -113,6 +113,12 @@ describe("Account", () => {
       expect(spiedFunction).to.have.been.called;
     });
   });
+
+  describe("Disables user", () => {
+    it('should disable a user', () => {''
+      let
+    })
+  })
 });
 
 function moneyAccount() {
